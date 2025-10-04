@@ -4,25 +4,26 @@ document.body.appendChild(getSumBtn);
 
 const getSum = () => {
 //Add your code here
-	const prices = document.querySelectorAll(".price");
-
+ const prices = document.querySelectorAll(".price");
   let total = 0;
-  prices.forEach((priceCell) => {
-    total += parseFloat(priceCell.textContent);
+
+  prices.forEach((p) => {
+    total += parseFloat(p.textContent);
   });
 
-  
-  const table = document.querySelector("table");
-  const newRow = document.createElement("tr");
+  // Check if #ans already exists (avoid duplicates)
+  let ansCell = document.querySelector("#ans");
+  if (!ansCell) {
+    const table = document.querySelector("table");
+    const newRow = document.createElement("tr");
+    ansCell = document.createElement("td");
+    ansCell.id = "ans"; // ✅ needed for Cypress test
+    ansCell.setAttribute("colspan", "2");
+    newRow.appendChild(ansCell);
+    table.appendChild(newRow);
+  }
 
-
-  const totalCell = document.createElement("td");
-  totalCell.setAttribute("colspan", "2");
-  totalCell.textContent = `Total Price = Rs ${total}`;
-
-  
-  newRow.appendChild(totalCell);
-  table.appendChild(newRow);
+  ansCell.textContent = `Total Price = Rs ${total}`;
 
 
   
